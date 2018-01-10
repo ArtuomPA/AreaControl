@@ -5,11 +5,11 @@ Contain basic values.
 LensResolution = [1920,1080]
 LensResolutionScaled = [1280,720]
 #Trapezium parameters
-LensBaseLarge = 724 #152 * 4.7619
-LensBaseSmall = 386 #81 * 4.7619
-LensHeight = 486 #102 * 4.7619
+LensBaseLarge = 741.6840250523307
+LensBaseSmall = 403.5385778007083
+LensHeight = 466.7979375569588
 
-ZeroPointPosition = [200,-45] #[42,-9.5] * 4.7619
+ZeroPointPosition = [200,-39.39947987432362]
 
 colorLower = (110, 50, 50)#  blue
 colorUpper = (130, 255, 255)#blue
