@@ -34,8 +34,8 @@ class Tracking:
             M = cv2.moments(c)
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
             
-#            YNormal[1] = Sources.LensResolutionScaled[1] - center[1]
-            YNormal = Sources.LensResolution[1] - center[1]
+#            YNormal[1] = Sources.VideoResolutionScaled[1] - center[1]
+            YNormal = Sources.VideoResolution[1] - center[1]
             return [center[0], YNormal]
         return center
         

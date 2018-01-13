@@ -4,6 +4,7 @@ from Compare import Compare
 from DB import DB
 import sys
 from Rotate import Rotate
+from trapezium import Trapezium
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from ui_mainwindow import Ui_MainWindow
@@ -60,6 +61,7 @@ class CalcThtead(QThread):
         self.center = None
         self.runIndicator = 0
         self.camInd = None
+        self.trapezium = Trapezium()
     
     def run(self):
         self.tracker1.getVideo(self.Video1)
@@ -77,18 +79,38 @@ class CalcThtead(QThread):
                 break
             
             if center1==None:
-                scaledCenter = Transformation.Transformation(center2)
+                scaledCenter = Transformation.Transformation(
+                        center2,
+                        self.trapezium.getTrapeziumBaseLarge(),
+                        self.trapezium.getTrapeziumBaseSmall(),
+                        self.trapezium.getTrapeziumHeight(),
+                        self.trapezium.getZeroPointPosition())
                 self.center = Rotate(scaledCenter)
                 delta=None
                 self.camInd = "Вторая"
             elif center2==None:
-                scaledCenter = Transformation.Transformation(center1)
+                scaledCenter = Transformation.Transformation(
+                        center1,
+                        self.trapezium.getTrapeziumBaseLarge(),
+                        self.trapezium.getTrapeziumBaseSmall(),
+                        self.trapezium.getTrapeziumHeight(),
+                        self.trapezium.getZeroPointPosition())
                 self.center = scaledCenter
                 delta=None
                 self.camInd = "Первая"
             else:
-                scaledCenter1 = Transformation.Transformation(center1)
-                scaledCenter2 = Transformation.Transformation(center2)
+                scaledCenter1 = Transformation.Transformation(
+                        center1,
+                        self.trapezium.getTrapeziumBaseLarge(),
+                        self.trapezium.getTrapeziumBaseSmall(),
+                        self.trapezium.getTrapeziumHeight(),
+                        self.trapezium.getZeroPointPosition())
+                scaledCenter2 = Transformation.Transformation(
+                        center2,
+                        self.trapezium.getTrapeziumBaseLarge(),
+                        self.trapezium.getTrapeziumBaseSmall(),
+                        self.trapezium.getTrapeziumHeight(),
+                        self.trapezium.getZeroPointPosition())
             
                 delta = Compare(scaledCenter1, scaledCenter2)
                 self.center = scaledCenter1
