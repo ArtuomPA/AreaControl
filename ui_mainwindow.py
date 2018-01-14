@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QPainter
+from PyQt5.QtGui import QPainter, QPixmap
 from PyQt5.QtCore import Qt
 
 class Ui_MainWindow(object):
@@ -71,11 +71,12 @@ class Ui_MainWindow(object):
 
 class paintWidget(QtWidgets.QWidget):
     x=200
-    y=300
+    y=400
     
     def paintEvent(self,e):
         qp = QPainter()
         qp.begin(self)
+        qp.drawPixmap(0,0,QPixmap("ProgramPlainTexture.png"))
         self.chudo(qp)
         qp.end()
         
@@ -85,5 +86,5 @@ class paintWidget(QtWidgets.QWidget):
         self.update()
         
     def chudo(self,qp):
-        qp.setPen(Qt.blue)
+        qp.setPen(Qt.red)
         qp.drawEllipse(self.x,self.y,5,5)

@@ -10,9 +10,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from ui_mainwindow import Ui_MainWindow
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from PyQt5.QtGui import QPalette
-from PyQt5.QtCore import Qt
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -29,11 +26,6 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_3.clicked.connect(self.stopProg)
         self.Calc.GetNewCoordinatesStr.connect(self.ui.textEdit.append)
         self.Calc.GetNewCoordinatesInt.connect(self.ui.widget.setCoordinates)
-        
-        pal = QPalette()
-        pal.setColor(QPalette.Background, Qt.gray)
-        self.ui.widget.setAutoFillBackground(True)
-        self.ui.widget.setPalette(pal)
 
     def stopCalc(self):
         if self.Calc.runIndicator == 1:
