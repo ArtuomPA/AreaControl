@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from ui_mainwindow import Ui_MainWindow
 from PyQt5.QtCore import QThread, pyqtSignal
 
+from camid import CamId
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -59,6 +61,8 @@ class CalcThtead(QThread):
         self.tracker1.getVideo(self.Video1)
         self.tracker2.getVideo(self.Video2)
         self.db.connect()
+        self._id = 0
+        self.idChecker = CamId()
         
         while True:
             if self.stopC == 1:
@@ -105,17 +109,26 @@ class CalcThtead(QThread):
                         self.trapezium.getZeroPointPosition())
             
                 delta = Compare(scaledCenter1, scaledCenter2)
-                self.center = scaledCenter1
+                self.center = (
+                        [
+                                int((scaledCenter1[0]+scaledCenter2[0])/2),
+                                int((scaledCenter1[1]+scaledCenter2[1])/2)
+                                ]
+                        )
                 delta = [int(delta[0]), int(delta[1])]
                 self.camInd = "Обе"
             
             self.center=[int(self.center[0]), int(self.center[1])]
             
+            if not self.idChecker.isCurrent(self.center):
+                self._id = self._id + 1
+            
             self.GetNewCoordinatesInt.emit(self.center[0],self.center[1])
             self.GetNewCoordinatesStr.emit("Координата = "+str(self.center)+
-                                           "   Камера: "+self.camInd)
+                                           "   Камера: "+self.camInd+
+                                           "   Объект: "+str(self._id))
             
-            self.db.vrite(self.center, delta, self.camInd)
+            self.db.vrite(self.center, delta, self.camInd, self._id)
             if self.runIndicator !=1:
                 self.runIndicator = 1
         
