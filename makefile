@@ -1,5 +1,8 @@
-tests:
-	python3 -m unittest -v TestsTrapezium.py
-	python3 -m unittest -v Tests_camid.py
+runtests:
+	python -m unittest discover
 run:
-	python3 MainGraphical.py
+	python3 src/main_graphical.py
+
+clear:
+	rm -rf src/__pycache__
+	rm -rf tests/__pycache__
